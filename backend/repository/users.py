@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 
 from jose import JWTError,jwt
 
-
 from config import SECRET_KEY,ALGORITHM
 
 from fastapi import Depends,Request,HTTPException
@@ -24,8 +23,8 @@ class BaseRepo():
     
 class UsersRepo(BaseRepo):
     @staticmethod
-    def find_by_username(db:Session,model:Generic[T],username:str):
-        return db.query(model).filter(model.username==username).first()
+    def find_by_email(db:Session,model:Generic[T],email:str):
+        return db.query(model).filter(model.email==email).first()
 
 class JWTRepo():
     def generate_token(date:dict,expires_delta:Optional[timedelta]=None):

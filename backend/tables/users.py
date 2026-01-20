@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import TIMESTAMP, Column, Integer, Sequence, String, Boolean, DateTime, text
 from config import Base
 import datetime
 
@@ -7,14 +7,15 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    username = Column(String, unique=True, index=True)
-    password_hash = Column(String)
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.datetime.now())
-    updated_at = Column(DateTime, default=datetime.datetime.now())
-    full_name = Column(String)
+    user_name = Column(String, unique=True, nullable=False)
+    name = Column(String, nullable=False)
     phone_number = Column(String)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'))
+    updated_at = Column(TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'), 
+                       onupdate=text('CURRENT_TIMESTAMP'))
 
 
 

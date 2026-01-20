@@ -38,11 +38,11 @@ def check_password(password, hashed):
 async def signup(request: Register,db:Session = Depends(get_db)):
     try:
         _user = User(
-            id=request.id,
-            username=request.username,
+            # id=request.id,
+            user_name=request.user_name,
             email=request.email,
-            full_name=request.full_name,
-            password_hash = hash_password(request.password),
+            name=request.name,
+            password = hash_password(request.password),
             phone_number=request.phone_number,
         )    
 
@@ -51,28 +51,28 @@ async def signup(request: Register,db:Session = Depends(get_db)):
         return ResponseSchema(
             code="200",
             status='ok',
-            message="Signup Success",
+            message="success",
         ).dict(exclude_none=True)
 
     except Exception as e:
         print(e.args)
 
-        return ResponseSchema(code="500",status='signup error',message=str(e.args)).dict(exclude_none=True)
+        return ResponseSchema(code="500",status='error',message=str(e.args)).dict(exclude_none=True)
 
 @router.post("/login")
 async def login(request: Login, db: Session = Depends(get_db)):
     try:
-        _user = UsersRepo.find_by_username(db,User,request.username)
+        _user = UsersRepo.find_by_email(db,User,request.email)
         
-        if not check_password(request.password,_user.password_hash):
+        if not check_password(request.password,_user.password):
+            print("Invalid Password")
             return ResponseSchema(code="400",message="Invalid Password").dict(exclude_none=True)
         
-        token = JWTRepo.generate_token({'sub' : _user.username})
+        token = JWTRepo.generate_token({'sub' : _user.user_name})
         
-        return ResponseSchema(code="200",status='ok',message="Login Success",result=TokenResponse(access_token=token, token_type="bearer")).dict(exclude_none=True)
+        return ResponseSchema(code="200",status='success',message="Login Success",result=TokenResponse(access_token=token, token_type="bearer")).dict(exclude_none=True)
 
     except Exception as e:
-        error_message = str(e.args)
-        print(error_message)
+        print(e.args)
 
-        return ResponseSchema(code="500",status='error',message=error_message).dict(exclude_none=True)
+        return ResponseSchema(code="500",status='error',message=str(e.args)).dict(exclude_none=True)

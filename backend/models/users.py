@@ -5,17 +5,16 @@ from pydantic import BaseModel,Field
 T = TypeVar("T")
 
 class Login(BaseModel):
-    username: str
+    email: str
     password: str
 
 class Register(BaseModel):
-    id: int
-    username: str
+    user_name: str
     password: str
     email: str
     phone_number: str
 
-    full_name: str
+    name: str
 
 class ResponseSchema(BaseModel):
     code: str
@@ -26,6 +25,13 @@ class ResponseSchema(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str
+
+class User(BaseModel):
+    user_name: str
+    email: str
+    name: str
+    password: str
+    phone_number: str
 
 
 
