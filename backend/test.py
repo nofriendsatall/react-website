@@ -1,31 +1,15 @@
-import bcrypt
-import hashlib
+import os
 
-def hash_password(password):
-    # 1. Кодируем пароль в байты
-    password_bytes = password.encode('utf-8')
-    
-    # 2. Предварительный хеш SHA-256 (фиксированный размер 32 байта)
-    sha256_hash = hashlib.sha256(password_bytes).digest()
-    
-    # 3. Хешируем результат через bcrypt
-    salt = bcrypt.gensalt()
-    # bcrypt может работать с raw байтами
-    bcrypt_hash = bcrypt.hashpw(sha256_hash, salt)
-    
-    return bcrypt_hash.decode('utf-8')
+def create_directory_tree(directory):
+    for root, dirs, files in os.walk(directory):
+        level = root.replace(directory, '').count(os.sep)
+        indent = ' ' * 4 * level
+        print(f'{indent}- {os.path.basename(root)}')
+        for file in files:
+            print(f'{indent}  - {file}')
 
-def check_password(password, hashed):
-    password_bytes = password.encode('utf-8')
-    sha256_hash = hashlib.sha256(password_bytes).digest()
-    return bcrypt.checkpw(sha256_hash, hashed.encode('utf-8'))
+# Specify the root directory of your backend
+backend_root = 'backend'
 
-# Пример использования
-password = "мой_очень_длинный_пароль_со_многими_символами_и_даже_с_эмодзи_😀"
-hashed = hash_password(password)
-print(len(hashed))
-print(f"Хеш создан: {hashed[:50]}...")
-
-# Проверка
-is_valid = check_password(password, hashed)
-print(f"Пароль верен: {is_valid}")
+# Call the function to create the directory tree
+create_directory_tree(backend_root)
