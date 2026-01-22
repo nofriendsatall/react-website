@@ -12,14 +12,10 @@ const App = () => {
 
   const [showLogin, setShowLogin] = React.useState(false);
 
-  function setShowLoginHandler(state) {
-    setShowLogin(state);
-    console.log('setShowLoginState ',state);
-  }
 
   return (
     <>
-      {showLogin ? <LoginPopUp setShowLogin={setShowLoginHandler} /> : <></>}
+      {showLogin ? <LoginPopUp setShowLogin={setShowLogin} /> : <></>}
       <div className="app">
         <NavBar setShowLogin={setShowLogin} />
         <Routes>

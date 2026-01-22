@@ -8,7 +8,7 @@ const LogInPopUp = ({setShowLogin}) => {
 
     const {url,setToken} = React.useContext(StoreContext);
 
-    const [currentState,setCurrentState] = React.useState("signup");
+    const [currentState,setCurrentState] = React.useState("Sign Up");
 
     const [data,setData] = React.useState({
         user_name: "",
@@ -88,7 +88,7 @@ const LogInPopUp = ({setShowLogin}) => {
 
                 <div className="login-popup-inputs">
                     {
-                        currentState === 'Log In' ? 
+                        currentState === 'Login' ? 
                         <></> :
                         <> 
                             <input type="text" name="name" onChange={onChangeHandler} value={data.name}  placeholder='Your Name' required />   
@@ -100,7 +100,7 @@ const LogInPopUp = ({setShowLogin}) => {
                     <input type="password" name="password" onChange={onChangeHandler} value={data.password} required  placeholder='Password' /> 
                 </div>
 
-                <button type='submit'>{currentState === "Sign Up" ? "Create Account" : "Log In" }</button>
+                <button type='submit'>{currentState === "Sign Up" ? "Create Account" : "Login" }</button>
 
                 <div className="login-popup-condition">
                     <input type="checkbox" required />
@@ -108,9 +108,9 @@ const LogInPopUp = ({setShowLogin}) => {
                 </div>
 
                 {
-                    currentState === "Log In" ?
+                    currentState === "Login" ?
                     <p>Create a new account? <span onClick={() => setCurrentState('Sign Up')}>Click here</span> </p> :
-                    <p>Already have a account? <span onClick={() => setCurrentState('Log In')}>Login here</span> </p>
+                    <p>Already have a account? <span onClick={() => setCurrentState('Login')}>Login here</span> </p>
                 }
 
             </form>
