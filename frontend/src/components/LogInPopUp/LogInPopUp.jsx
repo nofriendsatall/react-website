@@ -35,14 +35,14 @@ const LogInPopUp = ({setShowLogin}) => {
         let newUrl = url;
         let dataToSend;
 
-        if (currentState === 'Log In') {
+        if (currentState === 'Login') {
             newUrl += '/api/login';
 
             dataToSend = {
                 email: data.email,  
                 password: data.password
             };
-
+ 
         } else {
             newUrl += '/api/signup';
             dataToSend = {
@@ -59,9 +59,9 @@ const LogInPopUp = ({setShowLogin}) => {
 
         
 
-        if (response.data.status === 'success') {
+        if (response.data.success) {
             setToken(response.data.result.access_token);
-            localStorage.setItem("token",response.data.result.access_token);
+            localStorage.setItem("token",response.data.token);
 
             setShowLogin(false);
 
@@ -69,7 +69,7 @@ const LogInPopUp = ({setShowLogin}) => {
             
              
         } else {
-            console.log(response.data);
+            console.log(response.data.message);
             console.log('failed login frontend');
         }
 
